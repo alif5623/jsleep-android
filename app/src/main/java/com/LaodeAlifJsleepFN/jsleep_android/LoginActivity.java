@@ -12,8 +12,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        TextView register = findViewById(R.id.registerButton);
-        Button login = findViewById(R.id.loginButton);
+        TextView register = findViewById(R.id.registerNow);
         register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -21,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(move);
             }
         });
+
+        TextView login = findViewById(R.id.loginButton);
         login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -29,7 +30,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }
