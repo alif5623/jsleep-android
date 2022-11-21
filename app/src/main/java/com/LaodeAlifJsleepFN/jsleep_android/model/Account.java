@@ -20,9 +20,16 @@ public class Account extends Serializable
         this.password = password;
         this.balance = 0;
     }
-
+    @Override
     public String toString(){
-        return "\nID: " + this.id + "\nName: " + this.name + "\nEmail: " + this.email + "\nPassword: " + this.password;
+        //return "\nID: " + this.id + "\nName: " + this.name + "\nEmail: " + this.email + "\nPassword: " + this.password;
+        return "Account{" +
+                "balance = " + balance +
+                ", email ='" + email + '\''+
+                ", name ='" + name + '\'' +
+                ", password ='" + password + '\''+
+                ", renter = " + renter +
+                '}';
     }
     public Object write(){
         return null;
