@@ -32,6 +32,10 @@ import com.google.gson.GsonBuilder;
 
 public class MainActivity extends AppCompatActivity {
     String name;
+    public static String emailLog;
+    public static String passwordLog;
+    public static String balanceLog;
+    public static String nameLog;
     static ArrayList<Room> roomList = new ArrayList<Room>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

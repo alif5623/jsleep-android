@@ -12,7 +12,7 @@ import android.widget.*;
 import com.LaodeAlifJsleepFN.Account;
 import com.LaodeAlifJsleepFN.jsleep_android.request.BaseApiService;
 import com.LaodeAlifJsleepFN.jsleep_android.request.UtilsApi;
-
+import com.LaodeAlifJsleepFN.jsleep_android.MainActivity;
 import java.sql.SQLOutput;
 
 import retrofit2.Call;
@@ -44,13 +44,11 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Account account = requestAccount();
-                Intent move = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(move);
+                Account account = requestLogin();
             }
         });
     }
-
+    /*
     protected Account requestAccount(){
         mApiService.getAccount(0).enqueue(new Callback<Account>() {
             @Override
@@ -67,5 +65,30 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         return null;
+    }
+    */
+    protected Account requestLogin(){
+            mApiService.getAccount(username.getText().toString(), password.getText().toString()).enqueue(new Callback<Account>() {
+                @Override
+                public void onResponse(Call<Account> call, Response<Account> response) {
+                    if(response.isSuccessful()){
+                        Account account;
+                        account = response.body();
+                        System.out.println(account.toString());
+                        Intent move = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(move);
+                        MainActivity.emailLog = username.getText().toString();
+                        MainActivity.passwordLog = password.getText().toString();
+                        MainActivity.nameLog = account.name;
+                        MainActivity.balanceLog = String.valueOf(account.balance);
+                    }
+                }
+                @Override
+                public void onFailure(Call<Account> call, Throwable t) {
+                    Toast.makeText(mContext, "email atau password salah!", Toast.LENGTH_SHORT).show();
+                    System.out.println("email atau password salah");
+                }
+            });
+            return null;
     }
 }
