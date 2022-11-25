@@ -63,16 +63,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mApiService = UtilsApi.getApiService();
         mContext = this;
-        getAllRoom(currpage, pagesize);
-        ArrayAdapter<String> arrA = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nameList);
-        ListView lv = findViewById(R.id.listView);
-        lv.setAdapter(arrA);
+        displayList(currpage);
         next = findViewById(R.id.nextButton);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currpage += 1;
-                getAllRoom(currpage, pagesize);
+                displayList(currpage);
             }
         });
         prev = findViewById(R.id.prevButton);
@@ -80,15 +77,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 currpage -= 1;
+                displayList(currpage);
             }
-        });
+        });/*button blom selesai
         go = findViewById(R.id.goButton);
         go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 currpage = Integer.parseInt(page.getText().toString());
+                System.out.println("currpage");
+               // displayList(currpage);
             }
-        });
+        });*/
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -104,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void displayList(int currpage){
+        getAllRoom(currpage, pagesize);
+        ArrayAdapter<String> arrA = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nameList);
+        ListView lv = findViewById(R.id.listView);
+        lv.setAdapter(arrA);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
