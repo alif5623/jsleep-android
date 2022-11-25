@@ -81,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
                         MainActivity.passwordLog = password.getText().toString();
                         MainActivity.nameLog = account.name;
                         MainActivity.balanceLog = String.valueOf(account.balance);
+                        MainActivity.renter = account.renter;
+                        MainActivity.idLog = account.id;
                     }
                 }
                 @Override

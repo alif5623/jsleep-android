@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import com.LaodeAlifJsleepFN.jsleep_android.request.BaseApiService;
 import com.LaodeAlifJsleepFN.jsleep_android.request.UtilsApi;
-
-import java.sql.SQLOutput;
 import com.LaodeAlifJsleepFN.Account;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +39,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+
     protected Account requestRegister(){
+
         mApiService.registerAccount(name.getText().toString(), email.getText().toString(), password.getText().toString()).enqueue(new Callback<Account>() {
             @Override
             public void onResponse(Call<Account> call, Response<Account> response) {
