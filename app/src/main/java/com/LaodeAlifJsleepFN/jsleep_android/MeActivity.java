@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,9 +80,27 @@ public class MeActivity extends AppCompatActivity {
             phoneNumDisp.setText(MainActivity.renter.phoneNumber);
             cancelRegist.setVisibility(View.INVISIBLE);
             confirmRegist.setVisibility(View.INVISIBLE);
-
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(MainActivity.renter != null){
+            switch (item.getItemId()) {
+                case R.id.add_button:
+                    startActivity(new Intent(MeActivity.this, CreateRoom.class));
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        }else{
+            switch (item.getItemId()){
+                default:
+                    Toast.makeText(mContext, "Renter not found", Toast.LENGTH_SHORT).show();
+            }
+        }
+        return true;
     }
     protected Renter registerRenter(){
         mApiService.registerRenter(MainActivity.idLog, nameRent.getText().toString(), address.getText().toString(), phoneNum.getText().toString()).enqueue(new Callback<Renter>() {
@@ -103,12 +122,10 @@ public class MeActivity extends AppCompatActivity {
         });
         return null;
     }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menurenter, menu);
         return true;
     }
-
 
 }
