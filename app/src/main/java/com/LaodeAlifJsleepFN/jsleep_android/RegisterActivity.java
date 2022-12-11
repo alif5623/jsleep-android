@@ -1,7 +1,5 @@
 package com.LaodeAlifJsleepFN.jsleep_android;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,17 +8,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.LaodeAlifJsleepFN.Account;
 import com.LaodeAlifJsleepFN.jsleep_android.request.BaseApiService;
 import com.LaodeAlifJsleepFN.jsleep_android.request.UtilsApi;
-import com.LaodeAlifJsleepFN.Account;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Class activity to register new account
+ */
 public class RegisterActivity extends AppCompatActivity {
     BaseApiService mApiService;
     EditText name, email, password;
     Context mContext;
+    /**
+     * Method to make activity's layout
+     * @param savedInstanceState instance's state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +47,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Method to write a new registered account into account.json
+     * @return null
+     */
     protected Account requestRegister(){
 
         mApiService.registerAccount(name.getText().toString(), email.getText().toString(), password.getText().toString()).enqueue(new Callback<Account>() {

@@ -4,81 +4,175 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="end"
     android:background="#14141E"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/prevButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#471EA8"
-        android:text="Prev"
-        android:textColor="#14141E"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="411dp"
+        android:layout_height="142dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="-3dp">
 
-    <Button
-        android:id="@+id/nextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#471EA8"
-        android:text="Next"
-        android:textColor="#151A37"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        <TextView
+            android:id="@+id/onGoingOrderTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#471EA8"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=" On Going Book"
+            android:textAlignment="center"
+            android:textColor="#14141E"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/goButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="304dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#9A2573"
-        android:text="Go"
-        android:textAlignment="center"
-        android:textColor="#151A37"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ListView
+            android:id="@+id/onGoingLv"
+            android:layout_width="match_parent"
+            android:layout_height="112dp"
+            android:background="#AE8ECF"
+            android:visibility="invisible">
 
-    <EditText
-        android:id="@+id/findPage"
-        android:layout_width="53dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="232dp"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="#561FA3"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:textAlignment="center"
-        android:textColor="#9A2573"
-        android:textColorHint="#DA1414"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        </ListView>
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="653dp"
-        android:layout_marginTop="76dp"
-        android:orientation="horizontal"
+        android:layout_width="411dp"
+        android:layout_height="594dp"
+        android:layout_marginTop="145dp"
+        android:background="#14141E"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:background="#14141E"
+            android:backgroundTint="#14141E">
+
+            <SearchView
+                android:id="@+id/searchBar"
+                android:layout_width="271dp"
+                android:layout_height="62dp"
+                android:layout_marginLeft="140dp"
+                android:layout_marginBottom="5dp"
+                android:background="#14141E"
+                android:backgroundTint="#9A2573"
+                android:backgroundTintMode="multiply"
+                android:layoutDirection="rtl"
+                android:searchIcon="@drawable/ic_baseline_search_24" />
+
+            <Button
+                android:id="@+id/filterButton"
+                android:layout_width="139dp"
+                android:layout_height="match_parent"
+                android:background="#381883"
+                android:backgroundTint="#471EA8"
+                android:text="Filter"
+                android:textColor="#14141E"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="334dp"
             android:background="#AE8ECF"
-            android:backgroundTint="#AE8ECF" />
+            android:backgroundTint="#AE8ECF">
+
+        </ListView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#14141E">
+
+            <Button
+                android:id="@+id/goButton"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="310dp"
+                android:layout_marginRight="30dp"
+                android:backgroundTint="#9A2573"
+                android:text="Go"
+                android:textAlignment="center"
+                android:textColor="#151A37"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/findPage"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="210dp"
+                android:backgroundTint="#561FA3"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:textAlignment="center"
+                android:textColor="#9A2573"
+                android:textColorHint="#DA1414"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="110dp"
+                android:layout_weight="1"
+                android:backgroundTint="#9A2573"
+                android:text="Next"
+                android:textColor="#151A37"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/prevButton"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#471EA8"
+                android:text="Prev"
+                android:textColor="#14141E"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/noOrderFound"
+        android:layout_width="411dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="120dp"
+        android:background="#14141E"
+        android:backgroundTint="#14141E"
+        android:text=" No ongoing Order Found!"
+        android:textAlignment="center"
+        android:textColor="#9A2573"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/noRoomIcon"
+        android:layout_width="78dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_no_meeting_room_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#14141E"
+    tools:context=".AcceptOrderActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#14141E"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/confirmRoomTitle2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Confirm Room"
+                android:textAlignment="center"
+                android:textColor="#9A2573"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.51"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/waitingText"
+                android:layout_width="388dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="20sp"
+                android:text="Waiting Room"
+                android:textColor="#9A2573"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/OrderList"
+                android:layout_width="364dp"
+                android:layout_height="260dp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="10sp"
+                android:background="#AE8ECF" />
+
+            <TextView
+                android:id="@+id/completeText2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="20sp"
+                android:text="Complete Order"
+                android:textColor="#9A2573"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/CompleteOrder"
+                android:layout_width="364dp"
+                android:layout_height="260dp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="10sp"
+                android:background="#AE8ECF" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@
         android:layout_marginTop="156dp"
         android:text="Balance"
         android:textColor="#9A2573"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,6 +28,7 @@
         android:layout_marginTop="124dp"
         android:text="Email"
         android:textColor="#9A2573"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,11 +36,12 @@
     <TextView
         android:id="@+id/emaildisplay"
         android:layout_width="147dp"
-        android:layout_height="17dp"
+        android:layout_height="24dp"
         android:layout_marginStart="248dp"
         android:layout_marginTop="124dp"
         android:textAlignment="textEnd"
-        android:textColor="#9A2573"
+        android:textColor="#471EA8"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,18 +49,19 @@
     <TextView
         android:id="@+id/balancedisplay"
         android:layout_width="147dp"
-        android:layout_height="17dp"
+        android:layout_height="24dp"
         android:layout_marginStart="248dp"
         android:layout_marginTop="156dp"
         android:textAlignment="textEnd"
-        android:textColor="#9A2573"
+        android:textColor="#471EA8"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:layout_width="147dp"
-        android:layout_height="34dp"
+        android:layout_width="243dp"
+        android:layout_height="45dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="40dp"
         android:background="#9A2573"
@@ -68,14 +72,15 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="128dp"
-        android:layout_height="22dp"
+        android:layout_width="222dp"
+        android:layout_height="29dp"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="46dp"
+        android:layout_marginTop="48dp"
         android:text="Account Details"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#151A37"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="normal"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,6 +94,7 @@
         android:layout_marginTop="92dp"
         android:text="Name"
         android:textColor="#9A2573"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -100,7 +106,8 @@
         android:layout_marginStart="304dp"
         android:layout_marginTop="92dp"
         android:textAlignment="viewEnd"
-        android:textColor="#9A2573"
+        android:textColor="#471EA8"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -114,6 +121,8 @@
         android:ems="10"
         android:hint="Amount"
         android:inputType="number"
+        android:textColor="#9A2573"
+        android:textColorHighlight="#9A2573"
         android:textColorHint="#4B1D70"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -224,6 +233,7 @@
         android:text="TextView"
         android:textColor="#9A2573"
         android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -236,6 +246,7 @@
         android:text="TextView"
         android:textColor="#9A2573"
         android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -248,6 +259,7 @@
         android:text="TextView"
         android:textColor="#9A2573"
         android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

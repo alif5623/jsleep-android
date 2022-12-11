@@ -13,28 +13,15 @@ public class Room extends Serializable {
     public int size;
     public int accountId;
     public String name;
-    public Facility facility;
+    public ArrayList<Facility> facility;
     public Price price;
     public BedType bedType;
     public City city;
     public String address;
     public ArrayList <Date> booked = new ArrayList <Date>();
 
-    // * Constructor for objects of class Room
-    /*
-    public Room(String name, int size, Price price, Facility facility, City city, String address)
-    {
-        this.name = name;
-        this.size = size;
-        this.price = price;
-        this.facility = facility;
-        this.bedType = bedType.KING;
-        this.address = address;
-        this.city = city;
-    }*/
 
-
-    public Room(int accountId, String name, int size, Price price, Facility facility, City city, String address){
+    public Room(int accountId, String name, int size, Price price, ArrayList<Facility> facility, City city, String address, BedType typeBed){
         //super(id);
      //   this.id = id;
         this.accountId = accountId;
@@ -44,7 +31,7 @@ public class Room extends Serializable {
         this.facility = facility;
         this.city = city;
         this.address = address;
-        this.bedType = BedType.SINGLE;
+        this.bedType = typeBed;
     }
 
     public String toString(){
