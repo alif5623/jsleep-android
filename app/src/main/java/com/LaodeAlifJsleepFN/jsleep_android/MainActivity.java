@@ -34,7 +34,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements LogOutTimerUtil.LogOutListener
+{
     BaseApiService mApiService;
     Context mContext;
     String name;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity{
                 startActivity(new Intent(MainActivity.this, FilterActivity.class));
             }
         });
+
         System.out.println("Id: " + idLog);
         next = findViewById(R.id.nextButton);
         next.setOnClickListener(new View.OnClickListener() {
@@ -205,6 +207,31 @@ public class MainActivity extends AppCompatActivity{
         });
         System.out.println("Renter main : ");
         System.out.println(renter);
+    }
+
+    /**
+     * Method to start timer
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LogOutTimerUtil.startLogoutTimer(this, this);
+    }
+
+    /**
+     * Method to reset timer when there's interaction
+     */
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        LogOutTimerUtil.startLogoutTimer(this, this);
+    }
+    /**
+     * Logout when there's no activity in 5 minutes
+     */
+    @Override
+    public void doLogout() {
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
     }
 
     /**
