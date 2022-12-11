@@ -1,5 +1,6 @@
 package com.LaodeAlifJsleepFN.jsleep_android;
 
+import static com.LaodeAlifJsleepFN.jsleep_android.MainActivity.isFiltered;
 import static com.LaodeAlifJsleepFN.jsleep_android.MainActivity.nameList;
 
 import android.content.Context;
@@ -40,6 +41,8 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     CheckBox ac, bathup, balcony, wifi, refrigerator, restaurant, fitnessCenter, swimmingPool;
     City cityFilter;
     BedType bedFilter;
+    int minimumSize, maximumSize;
+    double minimumPrice, maximumPrice;
     private static ArrayList<Facility> facilityFilter = new ArrayList<>();
     private static ArrayList<Room> filteredRoom = new ArrayList<>();
     BaseApiService mApiService;
@@ -84,16 +87,25 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         fitnessCenter.setOnClickListener(this::onClick);
         swimmingPool = findViewById(R.id.swimmingPoolFilter);
         swimmingPool.setOnClickListener(this::onClick);
-        ArrayAdapter<Filter> adapterFilter = new ArrayAdapter<Filter>(getApplicationContext(), android.R.layout.simple_spinner_item, Filter.values());
+        minimumSize = 0;
+        maximumSize = 0;
+        maximumPrice = 0;
+        minimumPrice = 0;
+        ArrayAdapter<Filter> adapterFilter = new ArrayAdapter<Filter>(getApplicationContext(), R.layout.spinner_item, Filter.values());
         filter.setAdapter(adapterFilter);
         filter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                isFiltered =1 ;
                 if(adapterView.getItemAtPosition(i) == (Filter.BEDTYPE)){
+                    minimumSize = 0;
+                    maximumSize = 0;
+                    maximumPrice = 0;
+                    minimumPrice = 0;
                     invisEverything();
                     firstFilter.setText("Bed Type: ");
                     firstFilter.setVisibility(View.VISIBLE);
-                    bedType.setAdapter(new ArrayAdapter<BedType>(getApplicationContext(), android.R.layout.simple_spinner_item, BedType.values()));
+                    bedType.setAdapter(new ArrayAdapter<BedType>(getApplicationContext(), R.layout.spinner_item, BedType.values()));
                     bedType.setVisibility(View.VISIBLE);
                     bedType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -107,20 +119,27 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                     });
                 }
                 if(adapterView.getItemAtPosition(i) == (Filter.SIZE)){
+                    maximumPrice = 0;
+                    minimumPrice = 0;
                     invisEverything();
                     firstFilter.setText("Minimum Size: ");
                     firstFilter.setVisibility(View.VISIBLE);
                     minSize.setVisibility(View.VISIBLE);
-
+                    minimumSize = Integer.parseInt(minSize.getText().toString());
                     secondFilter.setText("Maximum Size: ");
                     secondFilter.setVisibility(View.VISIBLE);
                     maxSize.setVisibility(View.VISIBLE);
+                    maximumSize = Integer.parseInt(maxSize.getText().toString());
                 }
                 if(adapterView.getItemAtPosition(i) == (Filter.CITY)){
                     invisEverything();
+                    minimumSize = 0;
+                    maximumSize = 0;
+                    maximumPrice = 0;
+                    minimumPrice = 0;
                     firstFilter.setText("City: ");
                     firstFilter.setVisibility(View.VISIBLE);
-                    city.setAdapter(new ArrayAdapter<City>(getApplicationContext(), android.R.layout.simple_spinner_item, City.values()));
+                    city.setAdapter(new ArrayAdapter<City>(getApplicationContext(), R.layout.spinner_item, City.values()));
                     city.setVisibility(View.VISIBLE);
                     city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -134,15 +153,24 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 if(adapterView.getItemAtPosition(i) == (Filter.PRICE)){
                     invisEverything();
+                    minimumSize = 0;
+                    maximumSize = 0;
                     firstFilter.setText("Minimum Price: ");
                     firstFilter.setVisibility(View.VISIBLE);
                     minPrice.setVisibility(View.VISIBLE);
+                    minimumPrice = Integer.parseInt(minPrice.getText().toString());
                     secondFilter.setText("Maximum Price: ");
                     secondFilter.setVisibility(View.VISIBLE);
                     maxPrice.setVisibility(View.VISIBLE);
+                    maximumPrice = Integer.parseInt(maxPrice.getText().toString());
+
                 }
                 if(adapterView.getItemAtPosition(i) == Filter.FACILITY){
                     invisEverything();
+                    minimumSize = 0;
+                    maximumSize = 0;
+                    maximumPrice = 0;
+                    minimumPrice = 0;
                     if(FilterActivity.facilityFilter != null){
                         FilterActivity.facilityFilter.clear();
                     }
@@ -155,8 +183,6 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                     restaurant.setVisibility(View.VISIBLE);
                     fitnessCenter.setVisibility(View.VISIBLE);
                     swimmingPool.setVisibility(View.VISIBLE);
-                    if(ac.isChecked())
-                        System.out.println("AAAAAAAAAAA ");
                 }
             }
 
@@ -169,7 +195,6 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View view) {
                 roomFilter();
-                System.out.println("memek");
             }
         });
 
@@ -224,10 +249,12 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
      * @return null
      */
     protected List<Room> roomFilter(){
+        MainActivity.currpage = 0;
         System.out.println("Facility filter: ");
         System.out.println(FilterActivity.facilityFilter);
-        mApiService.getFilteredRoom(MainActivity.currpage, MainActivity.pagesize, Double.parseDouble(minPrice.getText().toString()), Double.parseDouble(maxPrice.getText().toString()), cityFilter, bedFilter,
-                Integer.parseInt(minSize.getText().toString()), Integer.parseInt(maxSize.getText().toString()), FilterActivity.facilityFilter).enqueue(new Callback<List<Room>>() {
+        System.out.println("Minmium size: " + minimumSize);
+        mApiService.getFilteredRoom(MainActivity.currpage, MainActivity.pagesize, cityFilter, minimumPrice, maximumPrice,
+                minimumSize, maximumSize, bedFilter,FilterActivity.facilityFilter).enqueue(new Callback<List<Room>>() {
             @Override
             public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
                 LoginActivity.filterUsed = 1;

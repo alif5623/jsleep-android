@@ -19,16 +19,14 @@ import retrofit2.http.Query;
 
 
 public interface BaseApiService {
-   /* @GET("account/{id}")
-    Call<Account> getAccount(@Path("id") int id);*/
     @POST("account/login")
     Call<Account> getAccount(@Query("email") String email, @Query("password") String password);
     @POST("account/register")
     Call<Account> registerAccount(@Query("name") String name, @Query("email") String email, @Query("password") String password);
     @POST("account/{id}/registerRenter")
     Call<Renter> registerRenter(@Path("id") int id, @Query("username") String username, @Query("address") String address, @Query("phoneNumber") String phoneNumber);
-    @GET("room/getAllRoom")
-    Call<List<Room>> getAllRoom(@Query("page") int page, @Query("pageSize")int pageSize);
+    @GET("room/getPaginatedRoom")
+    Call<List<Room>> getPaginatedRoom(@Query("page") int page, @Query("pageSize")int pageSize);
     @POST("room/create")
     Call<Room> createRoom(@Query("accountId") int id, @Query("name") String name, @Query("size") int size, @Query("price") int price,
                                 @Query("facility") ArrayList<Facility> facility, @Query("city")City city, @Query("address") String address, @Query("typeBed")BedType typeBed);
@@ -37,7 +35,7 @@ public interface BaseApiService {
     @POST("payment/create")
     Call<Payment> createPayment(@Query("buyerId") int buyerId, @Query("renterId") int renterId, @Query("roomId") int roomId, @Query("from") String from, @Query("to") String to);
     @POST("payment/{id}/accept")
-    Call<List<Payment>> acceptPayment(@Path("id") int id);
+    Call<Boolean> acceptPayment(@Path("id") int id);
     @GET("payment/{id}/getWaitingPayment")
     Call<List<Payment>> waitingPayment(@Path("id") int id, @Query("page") int page, @Query("pageSize") int pageSize);
     @GET("payment/{id}/getCompletedPayment")
@@ -47,12 +45,14 @@ public interface BaseApiService {
     @GET("account/getAllAccount")
     Call<List<Account>> getAllACcount();
     @GET("room/getFilteredRoom")
-    Call<List<Room>> getFilteredRoom(@Query("page") int page, @Query("pageSize") int pageSize, @Query("priceMin") double priceMin, @Query("priceMax") double priceMax, @Query("city") City city,
-                                     @Query("bed") BedType bed, @Query("minSize") int minSize, @Query("maxSize") int maxSize, @Query("facility") ArrayList<Facility> facility);
+    Call<List<Room>> getFilteredRoom(@Query("page") int page, @Query("pageSize") int pageSize, @Query("city") City city, @Query("priceMin") double priceMin, @Query("priceMax") double priceMax,
+                                 @Query("sizeMin") int sizeMin, @Query("sizeMax") int sizeMax, @Query("bed") BedType bed, @Query("facility") ArrayList<Facility> facility);
     @GET("payment/{id}/getMyOnGoingPayment")
     Call<List<Payment>> getOnGoingPayment(@Path("id") int id);
     @POST("payment/{id}/cancel")
     Call <Boolean> cancel(@Path("id") int id);
     @GET("room/searchRoom")
     Call<List<Room>> searchRoom(@Query("roomName") String roomName, @Query("page") int page, @Query("pageSize") int pageSize);
+    @GET("room/getAllRoom")
+    Call<List<Room>> getAllRoom();
 }

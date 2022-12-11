@@ -10,10 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.LaodeAlifJsleepFN.jsleep_android.model.Payment;
 import com.LaodeAlifJsleepFN.jsleep_android.request.BaseApiService;
 import com.LaodeAlifJsleepFN.jsleep_android.request.UtilsApi;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,18 +58,16 @@ public class AcceptOrderConfirmActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View view) {
-                mApiService.acceptPayment(AcceptOrderActivity.watingListPayment.get(AcceptOrderActivity.listSelected).id).enqueue(new Callback<List<Payment>>() {
+                mApiService.acceptPayment(AcceptOrderActivity.watingListPayment.get(AcceptOrderActivity.listSelected).id).enqueue(new Callback<Boolean>() {
                     @Override
-                    public void onResponse(Call<List<Payment>> call, Response<List<Payment>> response) {
-                        System.out.println("Accept kontol");
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                         Toast.makeText(mContext, "Payment accepted", Toast.LENGTH_SHORT);
                         startActivity(new Intent(AcceptOrderConfirmActivity.this, MainActivity.class));
                     }
+
                     @Override
-                    public void onFailure(Call<List<Payment>> call, Throwable t) {
-                        System.out.println("gk keaccept kontol");
+                    public void onFailure(Call<Boolean> call, Throwable t) {
                         Toast.makeText(mContext, "Failed to accept order", Toast.LENGTH_SHORT);
-                        startActivity(new Intent(AcceptOrderConfirmActivity.this, MainActivity.class));
                     }
                 });
             }

@@ -14,6 +14,11 @@ import com.LaodeAlifJsleepFN.jsleep_android.model.Payment;
 import com.LaodeAlifJsleepFN.jsleep_android.request.BaseApiService;
 import com.LaodeAlifJsleepFN.jsleep_android.request.UtilsApi;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,7 +31,7 @@ public class ConfirmRoomOrderActivity extends AppCompatActivity {
     Button confirm, cancel;
     BaseApiService mApiService;
     Context mcontext;
-
+    private double priceDisplay;
     /**
      * Method to make activity's layout
      * @param savedInstanceState instance's state
@@ -50,15 +55,19 @@ public class ConfirmRoomOrderActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancelOrder);
         if(MainActivity.isOnGoing != 1){
             cancel.setVisibility(View.INVISIBLE);
+            double roomPrice =(DetailRoomActivity.selectedRoom.price.price);
+            String fromDate = DetailRoomActivity.fromDate;
+            String toDate = DetailRoomActivity.toDate;
+            priceDisplay = getTotalPrice(roomPrice, fromDate, toDate);
             name.setText("Name: " + MainActivity.nameLog);
-            renter.setText("Renter: " + MainActivity.roomList.get(DetailRoomActivity.selectedRoom.accountId).name);
+            renter.setText("Renter: " + MainActivity.accountList.get(MainActivity.roomList.get(DetailRoomActivity.roomListSelected).accountId).name);
             address.setText("Address: " + DetailRoomActivity.selectedRoom.address);
             city.setText("City: " + DetailRoomActivity.selectedRoom.city.toString());
             roomName.setText("Room : " + DetailRoomActivity.selectedRoom.name);
             BedType.setText("Bed Type: " + DetailRoomActivity.selectedRoom.bedType.toString());
-            from.setText("From : " + DetailRoomActivity.fromDate);
-            to.setText("To: " + DetailRoomActivity.toDate);
-            price.setText("Price: Rp " + String.valueOf(DetailRoomActivity.selectedRoom.price.price));
+            from.setText("From : " + fromDate);
+            to.setText("To: " + toDate);
+            price.setText("Price: Rp " + priceDisplay);
             confirm.setVisibility(View.VISIBLE);
             confirm.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,15 +78,19 @@ public class ConfirmRoomOrderActivity extends AppCompatActivity {
         }else if(MainActivity.isOnGoing == 1){
             confirm.setVisibility(View.INVISIBLE);
             cancel.setVisibility(View.VISIBLE);
+            double roomPrice = MainActivity.allRoomList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).getRoomId()).price.price;
+            String fromDate = MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).from.toString();
+            String toDate = MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).to.toString();
+            priceDisplay = getTotalPrice(roomPrice, fromDate, toDate);
             name.setText("Name: " + MainActivity.nameLog);
             renter.setText("Renter: " + MainActivity.accountList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).renterId).name);
-            address.setText("Address: " + MainActivity.roomList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).getRoomId()).address);
-            city.setText("City: " + MainActivity.roomList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).getRoomId()).city);
-            roomName.setText("Room : " + MainActivity.roomList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).getRoomId()).name);
-            BedType.setText("Bed Type: " + MainActivity.roomList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).getRoomId()).bedType);
-            from.setText("From: " + MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).from.toString());
-            to.setText("From: " + MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).to.toString());
-            price.setText("Price: " + MainActivity.roomList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).getRoomId()).price.price);
+            address.setText("Address: " + MainActivity.allRoomList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).getRoomId()).address);
+            city.setText("City: " + MainActivity.allRoomList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).getRoomId()).city);
+            roomName.setText("Room : " + MainActivity.allRoomList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).getRoomId()).name);
+            BedType.setText("Bed Type: " + MainActivity.allRoomList.get(MainActivity.paymentListonGoing.get(MainActivity.paymentSelected).getRoomId()).bedType);
+            from.setText("From: " + fromDate);
+            to.setText("From: " + toDate);
+            price.setText("Price: " + priceDisplay);
             cancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -97,6 +110,20 @@ public class ConfirmRoomOrderActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    public double getTotalPrice(double price, String from, String to){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date dateFrom = dateFormat.parse(from);
+            Date dateTo = dateFormat.parse(to);
+            long duration = TimeUnit.DAYS.convert(dateTo.getTime() - dateFrom.getTime(), TimeUnit.MILLISECONDS);
+            System.out.println("Total Duration: " + duration);
+            return price * duration;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return price;
     }
 
     /**

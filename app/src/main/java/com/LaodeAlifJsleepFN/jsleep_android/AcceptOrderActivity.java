@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.LaodeAlifJsleepFN.Account;
+import com.LaodeAlifJsleepFN.jsleep_android.model.Invoice;
 import com.LaodeAlifJsleepFN.jsleep_android.model.Payment;
 import com.LaodeAlifJsleepFN.jsleep_android.request.BaseApiService;
 import com.LaodeAlifJsleepFN.jsleep_android.request.UtilsApi;
@@ -78,12 +79,10 @@ public class AcceptOrderActivity extends AppCompatActivity {
                     System.out.println("k = "  + k);
                 }
                 Toast.makeText(mContext, "Selected: " + i, Toast.LENGTH_SHORT);
-                System.out.println("Selected: " + i);
-                System.out.println("WTF bro");
+
                 startActivity(new Intent(AcceptOrderActivity.this, AcceptOrderConfirmActivity.class));
             }
         });
-        System.out.println("Kontoru: ");
         System.out.println(customerAcc);
     }
 
@@ -156,7 +155,11 @@ public class AcceptOrderActivity extends AppCompatActivity {
                     for(int i = 0; i < completedPaymentList.size(); i++){
                         for(int j = 0; j < accountList.size(); j++) {
                             if(accountList.get(j).id == completedPaymentList.get(i).buyerId)
-                                customerHistoryList.add(accountList.get(j).name);
+                                if(completedPaymentList.get(i).status == Invoice.PaymentStatus.FAILED){
+                                    customerHistoryList.add(accountList.get(j).name + " (Cancelled)");
+                                }else{
+                                    customerHistoryList.add(accountList.get(j).name);
+                                }
                         }
                     }
                     displayPaymentList(page);

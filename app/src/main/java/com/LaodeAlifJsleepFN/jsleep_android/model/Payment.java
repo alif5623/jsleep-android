@@ -13,9 +13,10 @@ public class Payment extends Invoice {
     public Date to;
     public Date from;
     private int roomId;
+    public double totalPrice;
     SimpleDateFormat SDFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-    public Payment(int buyerId, int renterId, int roomId, Date from, Date to) {
+    public Payment(int buyerId, int renterId, int roomId, Date from, Date to, double totalPrice) {
         super(buyerId, renterId);
         //  this.id = id;
         this.buyerId = buyerId;
@@ -30,9 +31,10 @@ public class Payment extends Invoice {
         //this.to = new Date();
         this.from = from;
         this.to = to;
+        this.totalPrice = totalPrice;
     }
 
-    public Payment(Account buyer, Renter renter, int roomId, Date from, Date to) {
+    public Payment(Account buyer, Renter renter, int roomId, Date from, Date to, double totalPrice) {
         super(buyer.id, renter.id);
         //this.id = id;
       //  this.buyerId = buyer.id;
@@ -47,6 +49,7 @@ public class Payment extends Invoice {
         this.roomId = roomId;
         this.from = from;
         this.to = to;
+        this.totalPrice = totalPrice;
     }
 
     public String print() {

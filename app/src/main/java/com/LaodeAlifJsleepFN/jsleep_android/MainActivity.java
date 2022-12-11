@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity{
     public static String balanceLog;
     public static String nameLog;
     public static Renter renter;
+    public static int isFiltered;
     public static int idLog;
     public static int listSelected;
     public static int roomSelected;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity{
     private SearchView searchBar;
     private String searchedRoom;
     public static int isOnGoing; //Nandain kalo yang dipilih list onGoing
+    public static ArrayList<Room> allRoomList = new ArrayList<>();
     public static ArrayList<Room> roomList = new ArrayList<Room>();
     public static ArrayList<Room> roomSearchList = new ArrayList<>();
     public static ArrayList<Account> accountList = new ArrayList<>();
@@ -76,8 +78,9 @@ public class MainActivity extends AppCompatActivity{
         onGoinglv = findViewById(R.id.onGoingLv);
         mApiService = UtilsApi.getApiService();
         mContext = this;
+        getAllRoom();
         if(LoginActivity.filterUsed == 0)
-            getAllRoom(currpage, pagesize);
+            getPaginatedRoom(currpage, pagesize);
         getOnGoingPayment();
         searchBar = (SearchView) findViewById(R.id.searchBar);
         filter = findViewById(R.id.filterButton);
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 currpage ++;
-                getAllRoom(currpage, pagesize);
+                getPaginatedRoom(currpage, pagesize);
             }
         });
         prev = findViewById(R.id.prevButton);
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 currpage -= 1;
-                getAllRoom(currpage, pagesize);
+                getPaginatedRoom(currpage, pagesize);
             }
         });
         go = findViewById(R.id.goButton);
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View view) {
                 currpage = Integer.parseInt(page.getText().toString()) - 1;
                 System.out.println("currpage: " + currpage);
-                getAllRoom(currpage, pagesize);
+                getPaginatedRoom(currpage, pagesize);
             }
         });
         mApiService.getAllACcount().enqueue(new Callback<List<Account>>() {
@@ -153,7 +156,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int onGoingSelected, long l) {
                 isOnGoing = 1;
-                for(Room i : roomList){
+                for(Room i : allRoomList){
                     if(i.name.equals(onGoingList.get(onGoingSelected)))
                         onGoingRoomSelected = i.id;
                 }
@@ -279,15 +282,15 @@ public class MainActivity extends AppCompatActivity{
                     paymentListonGoing.clear();
                 if(onGoingList != null)
                     onGoingList.clear();
-                if(responsePayment.body().isEmpty() == false){
+                if(!responsePayment.body().isEmpty()){
                     System.out.println("kok masuk?");
                     paymentListonGoing.addAll(responsePayment.body());
                     System.out.println("payment di sini: " + paymentListonGoing.get(0).buyerId) ;
                     for(int i = 0; i < paymentListonGoing.size(); i++) {
                         System.out.println("masuk ke " + i);
-                        for (int j = 0; j < roomList.size(); j++) {
-                            if (roomList.get(j).id == paymentListonGoing.get(i).getRoomId())
-                                onGoingList.add(roomList.get(j).name + " (" + paymentListonGoing.get(i).status + ")");
+                        for (int j = 0; j < allRoomList.size(); j++) {
+                            if (allRoomList.get(j).id == paymentListonGoing.get(i).getRoomId())
+                                onGoingList.add(allRoomList.get(j).name + " (" + paymentListonGoing.get(i).status + ")");
                         }
                     }
                 }
@@ -309,12 +312,15 @@ public class MainActivity extends AppCompatActivity{
      * @param pagesize is the size of the page
      * @return null
      */
-    protected List<Room> getAllRoom(int page, int pagesize){
-        if(roomList != null)
-            roomList.clear();
-        if(nameList !=null)
-            nameList.clear();
-        mApiService.getAllRoom(page, pagesize).enqueue(new Callback<List<Room>>() {
+    protected List<Room> getPaginatedRoom(int page, int pagesize){
+        if(isFiltered != 1){
+            if(roomList != null)
+                roomList.clear();
+            if(nameList !=null)
+                nameList.clear();
+        }
+
+        mApiService.getPaginatedRoom(page, pagesize).enqueue(new Callback<List<Room>>() {
             @Override
             public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
                 if(response.isSuccessful()){
@@ -329,6 +335,25 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onFailure(Call<List<Room>> call, Throwable t) {
                 Toast.makeText(mContext, "Room not found", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return null;
+    }
+
+    protected List<Room> getAllRoom(){
+        mApiService.getAllRoom().enqueue(new Callback<List<Room>>() {
+            @Override
+            public void onResponse(Call<List<Room>> call, Response<List<Room>> response) {
+                if(response.isSuccessful()){
+                    if(allRoomList != null)
+                        allRoomList.clear();
+                    allRoomList.addAll(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Room>> call, Throwable t) {
+                Toast.makeText(mContext, "Room not found", Toast.LENGTH_SHORT);
             }
         });
         return null;

@@ -24,6 +24,7 @@ public class DetailRoomActivity extends AppCompatActivity {
     public static String fromDate, toDate;
     public static Room selectedRoom;
     public static int totalDays;
+    public static int roomListSelected;
     /**
      * Method to make activity's layout
      * @param savedInstanceState instance's state
@@ -50,7 +51,8 @@ public class DetailRoomActivity extends AppCompatActivity {
         makeBook2 = findViewById(R.id.bookButton2);
         fromText = findViewById(R.id.fromText);
         toText = findViewById(R.id.toText);
-        selectedRoom = MainActivity.roomList.get(MainActivity.roomSelected);
+        roomListSelected = MainActivity.roomSelected - (MainActivity.currpage*MainActivity.pagesize);
+        selectedRoom = MainActivity.roomList.get(roomListSelected);
         System.out.println("Selected room: " + selectedRoom.id);
         name.setText("Name: " + selectedRoom.name);
         size.setText("Size: " + String.valueOf(selectedRoom.size) + "m^2");
@@ -125,25 +127,7 @@ public class DetailRoomActivity extends AppCompatActivity {
         int day = cal.get(Calendar.DAY_OF_MONTH);
         return makeDateString(day, month, year);
     }
-    /*
-    private void initDatePickerTo(Button toDateSpinner){
-        int style = AlertDialog.THEME_HOLO_DARK;
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener(){
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month += 1;
-                toDate = makeDateString(day, month, year);
-                toDateSpinner.setText(toDate);
-            }
-        };
-        getTodaysDate();
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        month += 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
-    }*/
+
     private void initDatePicker(Button DateSpinner) {
         int style = AlertDialog.THEME_HOLO_DARK;
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener(){
